@@ -52,7 +52,9 @@ export async function ThreeItemGrid() {
 
   if (products.length < 3) return null;
 
-  const [firstProduct, secondProduct, thirdProduct] = products;
+  const firstProduct = products[0]!;
+  const secondProduct = products[1]!;
+  const thirdProduct = products[2]!;
 
   return (
     <section className="mx-auto grid max-w-(--breakpoint-2xl) gap-4 px-4 pb-4 md:grid-cols-6 md:grid-rows-2 lg:max-h-[calc(100vh-200px)]">
