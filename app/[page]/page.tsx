@@ -9,31 +9,27 @@ export function generateStaticParams() {
   return pageHandles.map((page) => ({ page }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
+export async function generateMetadata(props: {
   params: Promise<{ page: string }>;
 }): Promise<Metadata> {
-  const params = await params;
-  const page = pageByHandle(params.page);
-  if (!page) return notFound();
+  const { page } = await props.params;
+  const meta = pageByHandle(page);
+  if (!meta) return notFound();
   return {
-    title: page.seo?.title || page.title,
-    description: page.seo?.description || page.title,
+    title: meta.seo?.title || meta.title,
+    description: meta.seo?.description || meta.title,
     openGraph: {
-      publishedTime: page.updatedAt,
-      modifiedTime: page.updatedAt,
+      publishedTime: meta.updatedAt,
+      modifiedTime: meta.updatedAt,
       type: "article",
     },
   };
 }
 
-export default async function Page({
-  params,
-}: {
+export default async function Page(props: {
   params: Promise<{ page: string }>;
 }) {
-  const { page: handle } = await params;
+  const { page: handle } = await props.params;
   const page = pageByHandle(handle);
   if (!page) return notFound();
 
