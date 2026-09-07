@@ -43,11 +43,11 @@ jobs:
       - name: Build static export
         run: pnpm build
       - name: Verify output dir
-        run: test -d "$PAGES_OUTPUT" && echo "output dir exists:" && ls -la "$PAGES_OUTPUT"
+        run: test -d "${PAGES_OUTPUT}" && echo "Output dir exists:" && ls -la "${PAGES_OUTPUT}"
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: $PAGES_OUTPUT
+          path: ${{ env.PAGES_OUTPUT }}
 
   deploy:
     needs: build
