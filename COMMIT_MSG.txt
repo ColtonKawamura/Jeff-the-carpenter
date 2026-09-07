@@ -1,7 +1,0 @@
-Fix /about prerender: map SitePage bodyHtml into the [page] route
-
-app/[page]/page.tsx read page.body but the local catalog stores static
-pages as SitePage objects (field bodyHtml), so getPage() returned an object
-with no body and Prose's dangerouslySetInnerHTML got undefined, crashing
-the static prerender of /about. Read the page directly from lib/site
-(pageByHandle) and render its bodyHtml, with SEO fallbacks.
