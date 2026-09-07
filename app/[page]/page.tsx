@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 
 import Prose from "components/prose";
+import { pageHandles } from "lib/site";
 import { getPage } from "lib/shopify";
 import { notFound } from "next/navigation";
+
+// Pre-render each static page (About, Order, …) for the export.
+export function generateStaticParams() {
+   return pageHandles.map((page) => ({ page }));
+}
 
 export async function generateMetadata(props: {
   params: Promise<{ page: string }>;

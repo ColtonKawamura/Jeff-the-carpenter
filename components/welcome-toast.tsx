@@ -7,26 +7,24 @@ export function WelcomeToast() {
   useEffect(() => {
     // ignore if screen height is too small
     if (window.innerHeight < 650) return;
-    if (!document.cookie.includes("welcome-toast=2")) {
-      toast("🛍️ Welcome to Next.js Commerce!", {
+    if (!document.cookie.includes("welcome-toast=3")) {
+      toast("Welcome to Jeff's Carpentry", {
         id: "welcome-toast",
         duration: Infinity,
         onDismiss: () => {
-          document.cookie = "welcome-toast=2; max-age=31536000; path=/";
+          document.cookie = "welcome-toast=3; max-age=31536000; path=/";
         },
         description: (
-          <>
-            This is a high-performance, SSR storefront powered by Shopify,
-            Next.js, and Vercel.{" "}
+           <>
+            Custom furniture, built to order in a garage.{" "}
             <a
-              href="https://vercel.com/templates/next.js/nextjs-commerce"
-              className="text-blue-600 hover:underline"
-              target="_blank"
+             href="/order"
+             className="text-blue-600 hover:underline"
             >
-              Deploy your own
+              Request a build
             </a>
             .
-          </>
+           </>
         ),
       });
     }
