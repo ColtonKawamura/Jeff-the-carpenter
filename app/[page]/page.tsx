@@ -1,56 +1,53 @@
 import type { Metadata } from "next";
 
 import Prose from "components/prose";
-import { pageHandles } from "lib/site";
-import { getPage } from "lib/shopify";
+import { pageHandles, pageByHandle } from "lib/site";
 import { notFound } from "next/navigation";
 
-// Pre-render each static page (About, Order, …) for the export.
+// Pre-render each static page.
 export function generateStaticParams() {
-   return pageHandles.map((page) => ({ page }));
+  return pageHandles.map((page) => ({ page }));
 }
 
-export async function generateMetadata(props: {
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ page: string }>;
 }): Promise<Metadata> {
-  const params = await props.params;
-  const page = await getPage(params.page);
-
+  const params = await params;
+  const page = pageByHandle(params.page);
   if (!page) return notFound();
-
   return {
     title: page.seo?.title || page.title,
-    description: page.seo?.description || page.bodySummary,
+    description: page.seo?.description || page.title,
     openGraph: {
-      publishedTime: page.createdAt,
+      publishedTime: page.updatedAt,
       modifiedTime: page.updatedAt,
       type: "article",
     },
   };
 }
 
-export default async function Page(props: {
+export default async function Page({
+  params,
+}: {
   params: Promise<{ page: string }>;
 }) {
-  const params = await props.params;
-  const page = await getPage(params.page);
-
+  const { page: handle } = await params;
+  const page = pageByHandle(handle);
   if (!page) return notFound();
 
   return (
-    <>
-      <h1 className="mb-8 text-5xl font-bold">{page.title}</h1>
-      <Prose className="mb-8" html={page.body} />
-      <p className="text-sm italic">
-        {`This document was last updated on ${new Intl.DateTimeFormat(
-          undefined,
-          {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          },
-        ).format(new Date(page.updatedAt))}.`}
-      </p>
-    </>
-  );
+     <>
+       <h1 className="mb-8 text-5xl font-bold">{page.title}</h1>
+       <Prose className="mb-8" html={page.bodyHtml} />
+       <p className="text-sm italic">
+        {`This page was last updated ${new Intl.DateTimeFormat(undefined, {
+         year: "numeric",
+         month: "long",
+         day: "numeric",
+        }).format(new Date(page.updatedAt))}.`}
+       </p>
+     </>
+     );
 }
