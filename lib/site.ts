@@ -318,7 +318,7 @@ export function productsWithTag(query?: string): Product[] {
   if (!query) return allProducts();
   const q = query.trim();
   return allProducts().filter((p) =>
-    (p.title + " " + p.description + " " + (p.tags ?? []).join(" ") + " " + p.tagline)
+    (p.title + " " + p.description + " " + (p.tags ?? []).join(" "))
       .toLowerCase()
       .includes(q.toLowerCase()),
   );
