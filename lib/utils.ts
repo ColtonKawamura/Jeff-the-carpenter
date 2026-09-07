@@ -1,8 +1,10 @@
 import { ReadonlyURLSearchParams } from "next/navigation";
 
-export const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "http://localhost:3000";
+// Base URL for metadata, sitemap and robots. On GitHub Pages CI we set
+// SITE_BASE_URL to the deployed Pages host; otherwise default to localhost.
+export const baseUrl =
+   process.env.SITE_BASE_URL?.replace(/\/$/, "") ||
+   `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "localhost:3000"}`;
 
 export const createUrl = (
   pathname: string,

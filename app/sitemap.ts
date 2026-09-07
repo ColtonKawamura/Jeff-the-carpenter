@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import { baseUrl } from "lib/utils";
 import { collections, sitePages, allProducts } from "lib/site";
 

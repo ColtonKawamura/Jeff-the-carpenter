@@ -19,6 +19,8 @@ concurrency:
 # custom domain that is "/", set PAGES_SUBPATH="" in the repo's Pages settings.
 env:
   PAGES_SUBPATH: "/Jeff-the-carpenter"
+  # Base URL for metadata / sitemap / robots on the deployed Pages site.
+  SITE_BASE_URL: "https://coltonkawamura.github.io/Jeff-the-carpenter"
   PAGES_OUTPUT: "out"
 
 jobs:
